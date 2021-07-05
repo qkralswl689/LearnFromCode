@@ -6,10 +6,92 @@
     <th:block th:fragment="content">
 
         <h1 class="mt-4">GuestBook List Page
-
+            <span>
+                <a th:href="@{/guestbook/register}">
+                    <button type="button" class="btn btn-outline-primary">REGISTER
+                    </button>
+                </a>
+            </span>
         </h1>
 
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Writer</th>
+                <th scope="col">Regdate</th>
+            </tr>
+            </thead>
+            <tbody>
 
+            <!-- th:each를 이용해 PageResultDTO 안에 들어있는 dtoList 반복처리 -->
+            <tr th:each="dto : ${result.dtoList}" >
+                <th scope="row">
+                    <a th:href="@{/guestbook/read(gno = ${dto.gno},page= ${result.page})}">
+                    [[${dto.gno}]]>
+                    </a>
+                </th>
+                <td>[[${dto.title}]]</td>
+                <td>[[${dto.writer}]]</td>
+                <!-- 년/월/일 포맷으로 출력-->
+                <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <ul class="pagination h-100 justify-content-center align-items-center">
+
+            <!-- 이전,다음 -> th:if 사용하여 처리-->
+            <!-- th:href 사용하여 링크이동 처리 -->
+            <li class="page-item " th:if="${result.prev}">
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.start -1}}" tabindex="-1">Previous</a>
+            </li>
+
+            <!-- active : 현재 페이지 여부 체크 -->
+            <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
+                <a class="page-link" th:href="@{/guestbook/list(page = ${page})}">
+                    [[${page}]]
+                </a>
+            </li>
+
+            <li class="page-item" th:if="${result.next}">
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.end + 1})}">Next</a>
+            </li>
+
+        </ul>
+
+        <!-- 모달창 -->
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 등록 후 전달되는 msg 값 확인 모달창 처리-->
+        <script th:inline="javascript">
+            var msg = [[${msg}]];
+
+            console.log(msg);
+
+            if(msg){
+                $(".modal").modal();
+            }
+        </script>
 
     </th:block>
 

@@ -12,6 +12,7 @@ import org.zerock.guestbook.dto.PageResultDTO;
 import org.zerock.guestbook.entity.Guestbook;
 import org.zerock.guestbook.repository.GuestbookRepository;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -54,6 +55,16 @@ public class GuestbookServiceImpl implements GuestbookService{
 
         // PageResultDTO : JPA의 처리결과인 Page<Entity> 와 Function을 전달해 엔티티 객체들을 DTO의 리스트로 변환하고 화면에 페이지 처리와 필요한 값들을 생성
         return new PageResultDTO<>(result,fn);
+    }
+
+    @Override
+    public GuestbookDTO read(Long gno) {
+
+        // findById() 를 통해 엔티티 객체 가져오기
+        Optional<Guestbook> result = repository.findById(gno);
+
+        // entityToDto()를 이용해 엔티티 객체를 DTO로 변환 해서 반환
+        return result.isPresent()? entityToDto(result.get()) : null;
     }
 
 
