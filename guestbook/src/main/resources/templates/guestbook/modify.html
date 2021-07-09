@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!--
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
 
@@ -8,16 +7,18 @@
 
         <h1 class="mt-4">GuestBook Modify Page</h1>
 
+        <!-- 수정/삭제 작접을 POST 방식으로 처리 -->
         <form action="/guestbook/modify" method="post">
 
-            &lt;!&ndash;페이지 번호  &ndash;&gt;
+            <!--페이지 번호 : 수정이 완료된 후에도 다시 동일한 정보를 유지할 수 있도록 page값을 form 태그에 추가해 전달 -->
             <input type="hidden" name="page" th:value="${requestDTO.page}">
-            <input type="hidden" name="type" th:value="${requestDTO.type}" >
-            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}" >
+            <!--<input type="hidden" name="type" th:value="${requestDTO.type}" >
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}" >-->
 
 
             <div class="form-group">
             <label >Gno</label>
+                <!-- readonly : 수정불가, 일기전용-->
             <input type="text" class="form-control" name="gno" th:value="${dto.gno}" readonly >
         </div>
 
@@ -54,6 +55,8 @@
 
             var actionForm = $("form"); //form 태그 객체
 
+            // Remove 버튼을 클릭하면 <form> 태그의 action 속성과 method 속성을 조정
+            // <form> 태그 내에는 <input>태그로 gno가 있기 때문에 컨트롤러에서는 여러 파라미터 중 gno를 추출해 삭제시 사용한다
             $(".removeBtn").click(function(){
 
                 actionForm
@@ -64,6 +67,7 @@
 
             });
 
+            // Modify 버튼의 이벤트 처리를 통해 수정
             $(".modifyBtn").click(function() {
 
                 if(!confirm("수정하시겠습니까?")){
@@ -76,6 +80,7 @@
                     .submit();
             });
 
+
             $(".listBtn").click(function() {
 
                 //var pageInfo = $("input[name='page']");
@@ -85,6 +90,7 @@
 
                 actionForm.empty(); //form 태그의 모든 내용을 지우고
 
+                // 목록 페이지 이동에 필요한 내용 다시 추가
                 actionForm.append(page);
                 actionForm.append(type);
                 actionForm.append(keyword);
@@ -104,4 +110,3 @@
     </th:block>
 
 </th:block>
--->

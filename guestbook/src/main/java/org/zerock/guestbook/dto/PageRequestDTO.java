@@ -15,6 +15,9 @@ public class PageRequestDTO {
     
     private int page;
     private int size;
+    // 검색을 위한 추가
+    private String type;
+    private String keyword;
     
     public PageRequestDTO(){
         // 페이지 번호는 기본값을 가지는것이 좋기 때문에 기본값 설정

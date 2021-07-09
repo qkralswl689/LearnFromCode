@@ -37,6 +37,13 @@ public interface GuestbookService {
         return dto;
     }
 
+    // 글 읽기
     GuestbookDTO read(Long gno);
+    
+    // 글 삭제
+    void remove(Long gno);
+    
+    // 글 수정
+    void modify(GuestbookDTO dto);
 
 }
