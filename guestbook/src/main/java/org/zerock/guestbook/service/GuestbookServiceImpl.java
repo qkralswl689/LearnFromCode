@@ -106,7 +106,7 @@ public class GuestbookServiceImpl implements GuestbookService{
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         QGuestbook qGuestbook = QGuestbook.guestbook;
-        
+
         String keyword = requestDTO.getKeyword();
 
         // gno > 0 조건만 생성

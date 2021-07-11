@@ -93,6 +93,10 @@ public class GuestbookController {
         redirectAttributes.addAttribute("page",requestDTO.getPage());
         redirectAttributes.addAttribute("gno", dto.getGno());
         
+        // 수정후 조회페이지로 리다이렉트 처리될 대 검색 조건을 유지하도록 추가했다
+        redirectAttributes.addAttribute("type",requestDTO.getType());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        
         return "redirect:/guestbook/read";
     }
     
