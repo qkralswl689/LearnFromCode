@@ -1,6 +1,7 @@
 package org.zerock.board.service;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.dto.PageResultDTO;
@@ -55,5 +56,6 @@ public interface BoardService {
         return boardDTO;
 
     }
+    void modify(BoardDTO boardDTO);
 
 }

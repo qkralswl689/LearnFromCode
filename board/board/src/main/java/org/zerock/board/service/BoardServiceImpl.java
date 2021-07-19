@@ -67,13 +67,24 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void removeWithReplies(Long bno) {
 
-        // 댓글 부터 삭제
+        //댓글 부터 삭제
         replyRepository.deleteByBno(bno);
-
 
         // 게시글 삭제
         boardRepository.deleteById(bno);
+
     }
 
+    @Transactional
+    @Override
+    public void modify(BoardDTO boardDTO) {
+        // getOne() : 필요한 순간까지 로딩을 지연하는 방식
+        Board board = boardRepository.getOne(boardDTO.getBno());
+        
+        board.changeTitle(boardDTO.getTitle());
+        board.changeContent(boardDTO.getContent());
+        
+        boardRepository.save(board);
+    }
 
 }
