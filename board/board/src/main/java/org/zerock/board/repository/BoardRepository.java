@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.zerock.board.entity.Board;
+import org.zerock.board.repository.search.SearchBoardRepository;
 
 import java.util.List;
 
 
-public interface BoardRepository extends JpaRepository<Board,Long> {
+public interface BoardRepository extends JpaRepository<Board,Long> , SearchBoardRepository {
 
     // 한개의 로우(Object) 내에 Object[ ] 로 나옴
     // * 주석 코드 -> 내가 작성 한것 => 안됨 이유 모르겠다
