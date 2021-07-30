@@ -46,8 +46,13 @@ public class BoardServiceImpl implements BoardService{
         // 핵심! - entityToDTO()를 이용해 PageResultDTO 객체를 구성
         Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board) en[0],(Member)en[1],(Long)en[2]));
 
-        Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
+       // Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
 
+        Page<Object[]> result = boardRepository.searchPage(
+                pageRequestDTO.getType(),
+                pageRequestDTO.getKeyword(),
+                pageRequestDTO.getPageable(Sort.by("bno").descending())
+        );
 
         return new PageResultDTO<>(result,fn);
     }
