@@ -38,7 +38,7 @@ public class MemberRepositoryTests {
     @Test
     public void testDeleteMember(){
         // Member의 mid
-        Long mid = 1L;
+        Long mid = 2L;
 
         Member member = Member.builder().mid(mid).build();
 
