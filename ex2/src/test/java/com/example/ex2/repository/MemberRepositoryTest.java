@@ -5,6 +5,10 @@ import com.example.repository.MemoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -62,4 +66,32 @@ public class MemberRepositoryTest {
 
         memoRepository.deleteById(mno);
     }
+
+    @Test
+    public void testPageDefault(){
+
+        // 정렬
+        Sort sort = Sort.by("mno").descending();
+
+        Sort sort2 = Sort.by("memoText").ascending();
+
+        Sort sortAll = sort.and(sort2); // and를 이용한 연결
+
+
+        // 1페이지 10개
+        Pageable pageable = PageRequest.of(0,10,sort);
+
+        Pageable pageable2 = PageRequest.of(0,10,sortAll);
+
+        Page<Memo> result = memoRepository.findAll(pageable);
+
+        System.out.println(result);
+
+        result.get().forEach(memo -> {
+            System.out.println(memo);
+        });
+
+    }
+
+
 }
