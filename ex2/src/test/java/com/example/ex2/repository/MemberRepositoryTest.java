@@ -9,7 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -85,13 +90,30 @@ public class MemberRepositoryTest {
 
         Page<Memo> result = memoRepository.findAll(pageable);
 
+        Page<Memo> result2 = memoRepository.findAll(pageable2);
+
         System.out.println(result);
 
         result.get().forEach(memo -> {
             System.out.println(memo);
         });
 
-    }
+        System.out.println(result2);
+        result2.get().forEach(memo -> {
+            System.out.println(memo);
+        });
 
+
+
+    }
+    // @Query  어노테이션 예시
+    /*    @Query("select m from Memo m order by m.mno desc")
+        List<Memo> getListDesc();*/
+/*
+    // : 파라미터 이용하는 방식
+    @Transactional
+    @Modifying
+    @Query("update Memo m set m.memoText = :memoText where m.mno = :mno ")
+    int updateMemoText(@Param("mno") Long mno, @Param("memoText") String memoText);*/
 
 }
