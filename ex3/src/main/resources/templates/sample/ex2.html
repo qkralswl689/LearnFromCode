@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<ul>
+    &lt;!&ndash; th:each = "변수:${목록}"&ndash;&gt;
+    <li th:each="dto : ${list}">
+        [[${dto}]]
+    </li>
+</ul>-->
+<!--<ul>
+    &lt;!&ndash;인덱스 출력예시&ndash;&gt;
+    <li th:each="dto,status : ${list}">
+       [[${status.index}]] -&#45;&#45; [[${dto}]]
+    </li>
+</ul>-->
+<ul>
+    <!--삼항연산자 사용 예시-->
+    <li th:each="dto,status : ${list}" if:th="${dto.sno % 5 == 0}">
+       [[${dto}]]
+    </li>
+</ul>
+</body>
+</html>
