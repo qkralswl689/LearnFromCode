@@ -33,8 +33,10 @@ public class GuestbookServiceTests {
 
         PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
 
-        for(GuestbookDTO guestbookDTO : resultDTO.getDtoList()){
+        /*for(GuestbookDTO guestbookDTO : resultDTO.getDtoList()){
             System.out.println(guestbookDTO);
-        }
+        }*/
+        System.out.println(resultDTO);
     }
+
 }
