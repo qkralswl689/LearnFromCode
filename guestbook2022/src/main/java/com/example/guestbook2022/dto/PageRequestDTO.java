@@ -18,6 +18,10 @@ public class PageRequestDTO { // 목적 : JPA쪽에서 사용하는 Pageable 타
     private int page;
     private int size;
 
+    // 검색 처리를 위해 추가
+    private String type;
+    private String keyword;
+
 
     public PageRequestDTO(){
         // 페이비 번호 등은 기본값을 가지는것이 좋기때문에 1과10이라는 값을 지정한다
