@@ -2,17 +2,14 @@ package com.example.board2022.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "writer") // exclude : toString 대상에서 제외한다
 public class Board extends BaseEntity{
 
     @Id
@@ -23,6 +20,8 @@ public class Board extends BaseEntity{
 
     private String content;
 
-    // 작성자 아직 처리 X
+    @ManyToOne
+    private Member writer;
+
 
 }
