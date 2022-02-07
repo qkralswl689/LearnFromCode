@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -37,6 +39,7 @@ public class BoardRepositoryTests {
     }
 
     @Test
+    @Transactional // 필요한 순간 다시 DB 연결
     public void testRead1(){
         Optional<Board> result = boardRepository.findById(100L); // DB에 존재하는 번호
 
@@ -47,14 +50,13 @@ public class BoardRepositoryTests {
     }
 
     @Test
-    public void readReply1(){
+    public void testReadWithWriter(){
+        Object result = boardRepository.getBoardWithWriter(100L);
 
-        Optional<Reply> result = replyRepository.findById(1L);
+        Object[] arr = (Object[]) result;
 
-        Reply reply = result.get();
-
-        System.out.println(reply);
-        System.out.println(reply.getBoard());
+        System.out.println("---------------");
+        System.out.println(Arrays.toString(arr));
     }
 
 }

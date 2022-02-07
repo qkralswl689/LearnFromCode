@@ -20,7 +20,8 @@ public class Board extends BaseEntity{
 
     private String content;
 
-    @ManyToOne
+    // LAZY : 필요할 때만 사용, LAZY 사용하면 @ToString(exclude) 무조건 사용!
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
 

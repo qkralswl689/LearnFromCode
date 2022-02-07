@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -13,6 +16,9 @@ public class ReplyRepositoryTests {
 
     @Autowired
     ReplyRepository replyRepository;
+
+    @Autowired
+    BoardRepository boardRepository;
 
     @Test // 임의의 게시글을 대상으로 댓글추가(300개)
     public void insertReply(){
@@ -32,5 +38,26 @@ public class ReplyRepositoryTests {
             replyRepository.save(reply);
 
         });
+    }
+
+    @Test
+    public void readReply1(){
+
+        Optional<Reply> result = replyRepository.findById(1L);
+
+        Reply reply = result.get();
+
+        System.out.println(reply);
+        System.out.println(reply.getBoard());
+    }
+
+    @Test
+    public void testGetBoardWithReply(){
+
+        List<Object[]> result = boardRepository.getBoardWithReply(100L);
+
+        for(Object[] arr : result){
+            System.out.println(Arrays.toString(arr));
+        }
     }
 }
