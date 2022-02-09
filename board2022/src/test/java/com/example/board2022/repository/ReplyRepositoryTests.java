@@ -51,13 +51,5 @@ public class ReplyRepositoryTests {
         System.out.println(reply.getBoard());
     }
 
-    @Test
-    public void testGetBoardWithReply(){
 
-        List<Object[]> result = boardRepository.getBoardWithReply(100L);
-
-        for(Object[] arr : result){
-            System.out.println(Arrays.toString(arr));
-        }
-    }
 }
