@@ -8,6 +8,7 @@ public interface BoardService {
 
     Long register(BoardDTO dto);
 
+
     default Board dtoToEntity(BoardDTO dto){
 
         Member member = Member.builder().email(dto.getWriterEmail()).build();
@@ -20,5 +21,7 @@ public interface BoardService {
                 .build();
 
         return board;
+
+
     }
 }
