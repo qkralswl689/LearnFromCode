@@ -21,7 +21,21 @@ public interface BoardService {
                 .build();
 
         return board;
+    }
 
+    default BoardDTO entityToDTO(Board board,Member member,Long replyCount){
 
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(board.getBno())
+                .titel(board.getTitle())
+                .content(board.getContent())
+                .regDate(board.getRegDate())
+                .modDate(board.getModDate())
+                .writerEmail(member.getEmail())
+                .writerName(member.getName())
+                .replyCount(replyCount.intValue()) // long으로 나오므로 int로 처리
+                .build();
+
+        return boardDTO;
     }
 }
