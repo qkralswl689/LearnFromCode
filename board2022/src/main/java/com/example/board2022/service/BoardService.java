@@ -1,12 +1,17 @@
 package com.example.board2022.service;
 
 import com.example.board2022.dto.BoardDTO;
+import com.example.board2022.dto.PageRequestDTO;
+import com.example.board2022.dto.PageResultDTO;
 import com.example.board2022.entity.Board;
 import com.example.board2022.entity.Member;
 
 public interface BoardService {
 
     Long register(BoardDTO dto);
+
+
+    PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
 
     default Board dtoToEntity(BoardDTO dto){
