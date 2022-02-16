@@ -1,12 +1,16 @@
 package com.example.board2022.service;
 
 import com.example.board2022.dto.BoardDTO;
+import com.example.board2022.dto.PageRequestDTO;
+import com.example.board2022.dto.PageResultDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
 public class BoardServiceTests {
+
 
     @Autowired
     private BoardService boardService;
@@ -21,5 +25,34 @@ public class BoardServiceTests {
                 .build();
 
         Long bno = boardService.register(dto);
+    }
+
+    @Test
+    public void testList(){
+
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+
+        PageResultDTO<BoardDTO, Object[]> result = boardService.getList(pageRequestDTO);
+
+        for (BoardDTO boardDTO : result.getDtoList()) {
+            System.out.println(boardDTO);
+        }
+    }
+
+    @Test
+    public void testGet(){
+
+        Long bno = 100L;
+
+        BoardDTO boardDTO = boardService.get(bno);
+
+        System.out.println(boardDTO);
+    }
+
+    @Test
+    public void testRemove(){
+        Long bno = 2L;
+
+        boardService.removeWithReplies(bno);
     }
 }

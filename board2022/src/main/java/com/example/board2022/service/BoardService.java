@@ -13,6 +13,9 @@ public interface BoardService {
 
     PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+    BoardDTO get(Long bno);
+
+    void removeWithReplies(Long bno); //삭제
 
     default Board dtoToEntity(BoardDTO dto){
 
