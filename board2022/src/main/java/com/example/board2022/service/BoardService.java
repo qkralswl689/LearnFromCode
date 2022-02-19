@@ -25,7 +25,7 @@ public interface BoardService {
 
         Board board = Board.builder()
                 .bno(dto.getBno())
-                .title(dto.getTitel())
+                .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(member)
                 .build();
@@ -37,7 +37,7 @@ public interface BoardService {
 
         BoardDTO boardDTO = BoardDTO.builder()
                 .bno(board.getBno())
-                .titel(board.getTitle())
+                .title(board.getTitle())
                 .content(board.getContent())
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())

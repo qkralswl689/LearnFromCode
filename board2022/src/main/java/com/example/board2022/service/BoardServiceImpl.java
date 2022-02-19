@@ -75,7 +75,7 @@ public class BoardServiceImpl implements BoardService{
         // getOne() : 필요한 순간까지 로딩을 지연하는 방식
         Board board = repository.getOne(boardDTO.getBno());
 
-        board.changeTitle(boardDTO.getTitel());
+        board.changeTitle(boardDTO.getTitle());
         board.changeContent(boardDTO.getContent());
 
         repository.save(board);

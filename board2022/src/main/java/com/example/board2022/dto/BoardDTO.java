@@ -15,7 +15,7 @@ public class BoardDTO {
 
     private Long bno;
 
-    private String titel;
+    private String title;
 
     private String content;
 

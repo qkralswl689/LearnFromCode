@@ -19,7 +19,7 @@ public class BoardServiceTests {
     public void testRegister(){
 
         BoardDTO dto = BoardDTO.builder()
-                .titel("Test...")
+                .title("Test...")
                 .content("Test....")
                 .writerEmail("user55@aaa.com") // 현재 DB에 존재하는 회원이메일
                 .build();
@@ -61,7 +61,7 @@ public class BoardServiceTests {
 
         BoardDTO boardDTO = BoardDTO.builder()
                 .bno(3L)
-                .titel("제목 변경")
+                .title("제목 변경")
                 .content("내용 변경")
                 .build();
 
