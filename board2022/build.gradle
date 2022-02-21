@@ -1,8 +1,15 @@
+//querydsl 추가
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10' // querydsl 사용을 위해 추가된 항목
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" // querydsl 사용을 위해 추가된 항목
 }
 
 group = 'com.example'
@@ -30,34 +37,32 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// querydsl 추가
-	implementation 'com.querydsl:querydsl-jpa'
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
-// querydsl 추가 시작
+//querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
 	jpa = true
 	querydslSourcesDir = querydslDir
 }
-
 sourceSets {
 	main.java.srcDir querydslDir
 }
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
 
-//  (gradle 5.0 이상부터는 옵션을 이렇게 넣어주어야 함)
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 	querydsl.extendsFrom compileClasspath
 }
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-}
-// querydsl 추가 끝
+//querydsl 추가 끝
