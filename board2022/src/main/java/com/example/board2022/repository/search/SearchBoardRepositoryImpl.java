@@ -2,6 +2,9 @@ package com.example.board2022.repository.search;
 
 import com.example.board2022.entity.Board;
 import com.example.board2022.entity.QBoard;
+import com.example.board2022.entity.QMember;
+import com.example.board2022.entity.QReply;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -20,12 +23,17 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         // log.info("search1............");
 
         QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
+        QMember member = QMember.member;
 
         JPQLQuery<Board> jpqlQuery = from(board);
+        jpqlQuery.leftJoin(member).on(board.writer.eq(member));
+        jpqlQuery.leftJoin(reply).on(reply.board.eq(board));
 
-        jpqlQuery.select(board).where(board.bno.eq(1L));
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(board,member.email,reply.count());
+        tuple.groupBy(board);
 
-        List<Board> result = jpqlQuery.fetch();
+        List<Tuple> result = tuple.fetch();
 
         return null;
     }
