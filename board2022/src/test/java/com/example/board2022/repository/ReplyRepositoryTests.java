@@ -52,4 +52,11 @@ public class ReplyRepositoryTests {
     }
 
 
+    @Test
+    public void testListByBoard(){
+
+        List<Reply> replyList = replyRepository.getRepliesByBoardOrderByRno(Board.builder().bno(88L).build());
+
+        replyList.forEach(reply -> System.out.println(reply));
+    }
 }
