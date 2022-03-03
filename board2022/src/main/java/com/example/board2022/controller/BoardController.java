@@ -1,4 +1,4 @@
-package com.example.board2022.boardController;
+package com.example.board2022.controller;
 
 import com.example.board2022.dto.BoardDTO;
 import com.example.board2022.dto.PageRequestDTO;
