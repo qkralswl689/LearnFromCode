@@ -104,7 +104,7 @@
                 //댓글이 추가될 영역
                 var listGroup  = $(".replyList");
 
-//날짜 처리를 위한 함수
+                //날짜 처리를 위한 함수
                 function formatTime(str){
                     var date = new Date(str);
 
@@ -115,7 +115,7 @@
                         date.getMinutes();
                 }
 
-//특정한 게시글의 댓글을 처리하는 함수
+                //특정한 게시글의 댓글을 처리하는 함수
                 function loadJSONData() {
                     $.getJSON('/replies/board/'+bno, function(arr){
 
