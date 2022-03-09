@@ -27,6 +27,8 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
 }
 
 tasks.named('test') {

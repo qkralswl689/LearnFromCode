@@ -1,6 +1,7 @@
 package com.example.mreview2022.controller;
 
 import com.example.mreview2022.dto.UploadResultDTO;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,15 @@ public class UploadController {
             Path savePath = Paths.get(saveName);
 
             try {
-                uploadFile.transferTo(savePath);// 실제 이미지 저장
+                uploadFile.transferTo(savePath);// 실제 이미지 저장(원본 파일)
+
+                //섬네일 생성 -> 섬네일 파일 이름은 중간에 s_로 시작
+                String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid + fileName;
+
+                File thumbnailFile = new File(thubmnailSaveName);
+                // 섬네일 생성
+                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,100,100);
+
                 resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
             }catch (IOException e){
                 e.printStackTrace();
