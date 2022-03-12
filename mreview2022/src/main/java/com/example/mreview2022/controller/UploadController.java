@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,8 +54,8 @@ public class UploadController {
             //UUID
             String uuid = UUID.randomUUID().toString();
 
-            //저장할 파일 이름
-            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + fileName;
+            //저장할 파일 이름 중간에 "_"를 이용해 구분
+            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
 
             Path savePath = Paths.get(saveName);
 
@@ -62,7 +63,7 @@ public class UploadController {
                 uploadFile.transferTo(savePath);// 실제 이미지 저장(원본 파일)
 
                 //섬네일 생성 -> 섬네일 파일 이름은 중간에 s_로 시작
-                String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid + fileName;
+                String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
 
                 File thumbnailFile = new File(thubmnailSaveName);
                 // 섬네일 생성
@@ -100,6 +101,28 @@ public class UploadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
+    }
+
+    @PostMapping("/removeFile")
+    public ResponseEntity<Boolean> removeFile(String fileName){
+        String srcFileName = null;
+
+        try {
+            srcFileName = URLDecoder.decode(fileName,"UTF-8");
+            File file = new File(uploadPath + File.separator + srcFileName);
+
+            boolean result = file.delete();
+
+            File thumbnail = new File(file.getParent(),"s_" + file.getName());
+
+            result = thumbnail.delete();
+
+            return new ResponseEntity<>(result,HttpStatus.OK);
+
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     private String makeFolder() {
 
