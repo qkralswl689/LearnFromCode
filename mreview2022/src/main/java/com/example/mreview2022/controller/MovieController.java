@@ -37,6 +37,6 @@ public class MovieController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, @NotNull Model model){
 
-        model.addAttribute("result",movieService.getList(pageRequestDTO));
+        //model.addAttribute("result",movieService.getList(pageRequestDTO));
     }
 }
