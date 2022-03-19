@@ -34,6 +34,10 @@ public interface MovieService {
                     .build();
         }).collect(Collectors.toList());
 
+        movieDTO.setImageDTOList(movieImageDTOList);
+        movieDTO.setAvg(avg);
+        movieDTO.setReviewCnt(reviewCnt.intValue());
+
         return movieDTO;
     }
 
