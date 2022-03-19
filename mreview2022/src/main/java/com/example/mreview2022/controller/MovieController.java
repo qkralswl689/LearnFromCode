@@ -5,6 +5,7 @@ import com.example.mreview2022.dto.PageRequestDTO;
 import com.example.mreview2022.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class MovieController {
 
+    @Autowired
     private final MovieService movieService; //final
 
     @GetMapping("/register")

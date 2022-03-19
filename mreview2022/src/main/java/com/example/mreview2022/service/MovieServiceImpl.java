@@ -8,6 +8,7 @@ import com.example.mreview2022.entity.MovieImage;
 import com.example.mreview2022.repository.MovieImageRepository;
 import com.example.mreview2022.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,8 +24,10 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
+    @Autowired
     private final MovieRepository movieRepository; // final
 
+    @Autowired
     private final MovieImageRepository imageRepository; // final
 
     @Transactional
