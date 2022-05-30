@@ -7,9 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
+@WebAppConfiguration
 @SpringBootTest
 public class ClubMemberTests {
 
@@ -46,5 +50,13 @@ public class ClubMemberTests {
 
             repository.save(clubMember);
         });
+    }
+
+    @Test
+    public void testRead(){
+        Optional<ClubMember> result = repository.findByEmail("user95@com.example",false);
+
+        ClubMember clubMember = result.orElse(null); //result.get();
+        System.out.println(clubMember);
     }
 }

@@ -2,10 +2,7 @@ package com.example.club.entity;
 
 import lombok.*;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,11 +21,11 @@ public class ClubMember extends BaseEntity {
 
     private String name;
 
+    @Column(name = "from_social")
     private boolean formSocial;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<ClubMemberRole> roleSet = new HashSet<>();
+    private Set<ClubMemberRole> roleSet ;
 
     public void addMemberRole(ClubMemberRole clubMemberRole){
         roleSet.add(clubMemberRole);
