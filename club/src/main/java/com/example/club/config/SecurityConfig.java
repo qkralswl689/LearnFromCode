@@ -34,7 +34,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
+    // ClubUserDetailsService가 빈(Bean)으로 등록되면서 자동으로 스프링 시큐리티에서 UserDetailsService로 인식하기 때문에 아래 코드는 사용하지 않음
+  /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         // 사용자 계멍 : user1
@@ -43,5 +44,5 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         .password("$2a$10$ORfLbDWdDks2osZmIcnHu.X/aH.DxoJVI9tq.3Vw0pjGtSlr/Pzcq")
         // 권한
         .roles("USER");
-    }
+    }*/
 }
