@@ -1,5 +1,7 @@
 package com.example.club.controller;
 
+import com.example.club.security.dto.ClubAuthMemberDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,9 @@ public class SampleController {
 
     // 로그인한 사용자만 접근 가능
     @GetMapping("/member")
-    public void exMember(){
+    public void exMember(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember){
         System.out.println("exMember");
+        System.out.println(clubAuthMember);
     }
 
     // 관리자 권한이 있는 사용자만 접근가능
