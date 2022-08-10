@@ -31,7 +31,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         // 로그아웃 설정
         http.logout();
 
-
+        // 소셜로그인 설정
+        http.oauth2Login();
     }
 
     // ClubUserDetailsService가 빈(Bean)으로 등록되면서 자동으로 스프링 시큐리티에서 UserDetailsService로 인식하기 때문에 아래 코드는 사용하지 않음
