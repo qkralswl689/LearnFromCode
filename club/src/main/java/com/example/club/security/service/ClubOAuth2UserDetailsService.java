@@ -3,7 +3,9 @@ package com.example.club.security.service;
 import com.example.club.entity.ClubMember;
 import com.example.club.entity.ClubMemberRole;
 import com.example.club.repository.ClubMemberRepository;
+import com.example.club.security.dto.ClubAuthMemberDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -12,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +42,21 @@ public class ClubOAuth2UserDetailsService extends DefaultOAuth2UserService {
             email = oAuth2User.getAttribute("email");
         }
 
+        //ClubMember member = saveSocailMember(email);
+
+      //  return oAuth2User;
+
         ClubMember member = saveSocailMember(email);
 
-        return oAuth2User;
+        ClubAuthMemberDTO clubAuthMember = new ClubAuthMemberDTO(member.getEmail(),
+                member.getPassword(),true,
+                member.getRoleSet().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name())).collect(Collectors.toList()),
+                oAuth2User.getAttributes());
+        clubAuthMember.setName(member.getName());
+
+        return clubAuthMember;
     }
+
 
     private ClubMember saveSocailMember(String email){
 
@@ -67,4 +81,6 @@ public class ClubOAuth2UserDetailsService extends DefaultOAuth2UserService {
 
         return clubMember;
     }
+
+
 }
