@@ -5,6 +5,7 @@ import com.example.club.entity.Note;
 import com.example.club.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -70,7 +71,6 @@ public class NoteServideImpl implements Noteservice{
     public List<NoteDTO> getAllWithWriter(String writerEmail) {
 
         List<Note> noteList = noteRepository.getList(writerEmail);
-
 
         return noteList.stream().map(note -> entityToDTO(note)).collect(Collectors.toList());
     }

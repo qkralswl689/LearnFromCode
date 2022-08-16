@@ -3,11 +3,13 @@ package com.example.club.controller;
 import com.example.club.dto.NoteDTO;
 import com.example.club.service.Noteservice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -40,5 +42,13 @@ public class NoteController {
     // 파라미터로 전달되는 이메일 주소를 통해 해당회원이 작성한 모든 Note에 대한 정보를 JSON으로 반환
    public ResponseEntity<List<NoteDTO>> getList(String email){
         return new ResponseEntity<>(noteservice.getAllWithWriter(email), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{num}",produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> remove(@PathVariable("num") Long num){
+
+        noteservice.remove(num);
+
+        return new ResponseEntity<>("removed" ,HttpStatus.OK);
     }
 }
