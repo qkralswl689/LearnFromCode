@@ -1,6 +1,8 @@
 package com.example.club.config;
 
 import com.example.club.security.filter.ApiCheckFilter;
+import com.example.club.security.filter.ApiLoginFilter;
+import com.example.club.security.handler.ApiLoginFailHandler;
 import com.example.club.security.handler.ClubLoginSucessHandler;
 import com.example.club.security.service.ClubUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 
@@ -45,10 +48,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.logout();
 
         // 소셜로그인 설정
-        http.oauth2Login().successHandler((AuthenticationSuccessHandler) sucessHandler());
+        http.oauth2Login().successHandler(sucessHandler());
 
         // Remember me 설정 - 쿠키를 얼마나 유지할 것인지 지정 -> 초(second)단위로 설정하므로 7일간 쿠기가 유지되도록 지정했다 -> 소셜로그인시 지정 불가
         http.rememberMe().tokenValiditySeconds(60*60*24*7).userDetailsService(userDetailsService); // 7Days
+
+        // ApiCheckfilter/addFilterBefore 를 UsernamePasswordAuthenticationFilter 이전에 동작하도록 지정
+        http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiLoginFilter(),UsernamePasswordAuthenticationFilter.class);
+
+
     }
 
     @Bean
@@ -70,6 +79,20 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ApiCheckFilter apiCheckFilter(){
-        return new ApiCheckFilter();
+        return new ApiCheckFilter("/notes/**/*");
     }
+
+    @Bean
+    // /api/login 경로로 접근할 때 동작하도록 지정 ,
+    public ApiLoginFilter apiLoginFilter() throws Exception{
+
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        apiLoginFilter.setAuthenticationManager(authenticationManager());
+
+        // 인증실패시 401 상태코드 반환
+        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
+        return apiLoginFilter;
+    }
+
+
 }
