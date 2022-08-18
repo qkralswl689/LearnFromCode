@@ -1,5 +1,6 @@
 package com.example.club.config;
 
+import com.example.club.security.filter.ApiCheckFilter;
 import com.example.club.security.handler.ClubLoginSucessHandler;
 import com.example.club.security.service.ClubUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +67,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         // 권한
         .roles("USER");
     }*/
+
+    @Bean
+    public ApiCheckFilter apiCheckFilter(){
+        return new ApiCheckFilter();
+    }
 }

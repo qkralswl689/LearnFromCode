@@ -51,4 +51,12 @@ public class NoteController {
 
         return new ResponseEntity<>("removed" ,HttpStatus.OK);
     }
+
+    @PutMapping(value = "/{num}",produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> modify(@RequestBody NoteDTO noteDTO){
+
+        noteservice.modify(noteDTO);
+
+        return new ResponseEntity<>("modified", HttpStatus.OK);
+    }
 }
