@@ -5,6 +5,7 @@ import com.example.club.security.filter.ApiLoginFilter;
 import com.example.club.security.handler.ApiLoginFailHandler;
 import com.example.club.security.handler.ClubLoginSucessHandler;
 import com.example.club.security.service.ClubUserDetailsService;
+import com.example.club.security.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -79,19 +80,24 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ApiCheckFilter apiCheckFilter(){
-        return new ApiCheckFilter("/notes/**/*");
+        return new ApiCheckFilter("/notes/**/*",jwtUtil());
     }
 
     @Bean
     // /api/login 경로로 접근할 때 동작하도록 지정 ,
     public ApiLoginFilter apiLoginFilter() throws Exception{
 
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login",jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager());
 
         // 인증실패시 401 상태코드 반환
         apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
         return apiLoginFilter;
+    }
+
+    @Bean
+    public JWTUtil jwtUtil(){
+        return new JWTUtil();
     }
 
 
